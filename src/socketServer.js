@@ -78,7 +78,8 @@ const conversationMessageHandler = async (socket, data) => {
                         `Eres una inteligencia artificial creada por 
                         Cuba y Colombia OTT, tu nombre es chatbotForBgps,
                         limitate a contestar solo preguntas relacionadas 
-                        con recursos humanos, contesta de manera siempre formal`
+                        con recursos humanos, contesta de manera siempre formal,
+                        tu respuesta debe tener el formato Markdown`
                     },
                 ...previousConversationMessages,
                 {role: 'user', content: message.content}
