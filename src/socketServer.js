@@ -71,7 +71,7 @@ const conversationMessageHandler = async (socket, data) => {
         }
 
         const response = await openai.createChatCompletion({
-            model: 'gpt-3.5-turbo',
+            model: 'ft:gpt-3.5-turbo-0613:ofrece-tu-talento::8ojNu86Z',
             messages: [
                 {role: 'system', 
                     content: 
