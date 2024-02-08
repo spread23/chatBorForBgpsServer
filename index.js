@@ -4,6 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 
+const resultsRoutes = require('./src/routes/results');
+
 const socketServer = require('./src/socketServer');
 
 const { connectWithOpenAIApi } = require('./src/ai');
@@ -18,6 +20,8 @@ socketServer.registerSocketServer(server);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
+
+app.use("/api/results", resultsRoutes);
 
 app.get('/', (req, res) => {
     return  res.status(200).json({
