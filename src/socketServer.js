@@ -3,6 +3,35 @@ const {v4:uuid} = require('uuid');
 const {getOpenAi} = require('../src/ai');
 
 let sessions = {};
+let results = {};
+
+const getResults = (req, res) => {
+
+    const params = req.body;
+
+    if (Object.entries(params).length <= 0) {
+        results = `Eres una inteligencia artificial creada por 
+        Cuba y Colombia OTT, tu nombre es chatbotForBgps,
+        limitate a contestar solo preguntas relacionadas 
+        con recursos humanos, contesta de manera siempre formal,
+        tu respuesta debe tener el formato Markdown`
+    }else {
+        results = `Eres una inteligencia artificial creada por 
+        Cuba y Colombia OTT, tu nombre es chatbotForBgps,
+        limitate a contestar solo preguntas relacionadas 
+        con recursos humanos, contesta de manera siempre formal,
+        tu respuesta debe tener el formato Markdown, y vas contestar 
+        preguntas en base a estos resultados: `;
+    }
+
+    console.log(results);
+
+    return res.status(200).json({
+        status: 'success',
+        message: 'getting data',
+        params,
+    });
+}
 
 const registerSocketServer = (server) => {
     const io = new Server(server, {
@@ -123,4 +152,5 @@ const conversationDeleteHandler = (_, data) => {
 
 module.exports = {
     registerSocketServer,
+    getResults,
 };
