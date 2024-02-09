@@ -3,28 +3,34 @@ const {v4:uuid} = require('uuid');
 const {getOpenAi} = require('../src/ai');
 
 let sessions = {};
-let results = {};
+let results = `Eres una inteligencia artificial creada por 
+Cuba y Colombia OTT, tu nombre es chatbotForBgps,
+limitate a contestar solo preguntas relacionadas 
+con recursos humanos, contesta de manera siempre formal,
+tu respuesta debe tener el formato Markdown`;
 
 const getResults = (req, res) => {
 
+    results = `Eres un mentor de recursos humanos, creado por 
+                   Cuba y Colombia OTT, tu nombre es chatbotForBgps,
+                   limitate a contestar solo preguntas relacionadas 
+                   con recursos humanos, contesta de manera siempre formal,
+                   tu respuesta debe tener el formato Markdown`;
+
     const params = req.body;
 
-    if (Object.entries(params).length <= 0) {
-        results = `Eres una inteligencia artificial creada por 
+    if (Object.entries(params).length >= 1) {
+        results = `Eres un mentor de recursos humanos, creado por 
         Cuba y Colombia OTT, tu nombre es chatbotForBgps,
         limitate a contestar solo preguntas relacionadas 
         con recursos humanos, contesta de manera siempre formal,
-        tu respuesta debe tener el formato Markdown`
-    }else {
-        results = `Eres una inteligencia artificial creada por 
-        Cuba y Colombia OTT, tu nombre es chatbotForBgps,
-        limitate a contestar solo preguntas relacionadas 
-        con recursos humanos, contesta de manera siempre formal,
-        tu respuesta debe tener el formato Markdown, y vas contestar 
-        preguntas en base a estos resultados: `;
+        tu respuesta debe tener el formato Markdown, y vas a responder 
+        preguntas sobre la persona ${params.name} con valores en el DISC 
+        D= ${params.D}% I= ${params.I}% S=${params.S}% C= ${params.C}%,
+        en el test de BGPS tambien obtuvo Accion= ${params.accion}% Entusiasmo= ${params.entusiasmo}%
+        Colaboracion= ${params.colaboracion}% Apoyo= ${params.apoyo}% Equilibrio= ${params.equilibrio}%
+        Precision= ${params.precision}% Desafio= ${params.desafio}% Resultados= ${params.resultados}% `;
     }
-
-    console.log(results);
 
     return res.status(200).json({
         status: 'success',
@@ -100,15 +106,10 @@ const conversationMessageHandler = async (socket, data) => {
         }
 
         const response = await openai.createChatCompletion({
-            model: 'ft:gpt-3.5-turbo-0613:ofrece-tu-talento::8ojNu86Z',
+            model: 'gpt-3.5-turbo',
             messages: [
                 {role: 'system', 
-                    content: 
-                        `Eres una inteligencia artificial creada por 
-                        Cuba y Colombia OTT, tu nombre es chatbotForBgps,
-                        limitate a contestar solo preguntas relacionadas 
-                        con recursos humanos, contesta de manera siempre formal,
-                        tu respuesta debe tener el formato Markdown`
+                    content: results
                     },
                 ...previousConversationMessages,
                 {role: 'user', content: message.content}
