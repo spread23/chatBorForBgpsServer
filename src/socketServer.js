@@ -19,7 +19,10 @@ const getResults = (req, res) => {
 
     const params = req.body;
 
-    if (Object.entries(params).length >= 1) {
+    if (Object.entries(params).length >= 1 && params.name && params.D && 
+        params.I && params.S && params.C && params.accion && params.entusiasmo
+        && params.colaboracion && params.apoyo && params.equilibrio && params.precision
+        && params.desafio && params.resultados) {
         results = `Eres un mentor de recursos humanos, creado por 
         Cuba y Colombia OTT, tu nombre es chatbotForBgps,
         limitate a contestar solo preguntas relacionadas 
@@ -30,6 +33,11 @@ const getResults = (req, res) => {
         en el test de BGPS tambien obtuvo Accion= ${params.accion}% Entusiasmo= ${params.entusiasmo}%
         Colaboracion= ${params.colaboracion}% Apoyo= ${params.apoyo}% Equilibrio= ${params.equilibrio}%
         Precision= ${params.precision}% Desafio= ${params.desafio}% Resultados= ${params.resultados}% `;
+    } else {
+        return res.status(404).json({
+            status: 'error',
+            message: 'Missing params',
+        });
     }
 
     return res.status(200).json({
